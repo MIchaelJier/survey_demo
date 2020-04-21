@@ -1,0 +1,51 @@
+.Router {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all .6s ease;
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(100%, 0);
+    transform: translate(100%, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+    opacity: 0;
+    -webkit-transform: translate(-100%, 0);
+    transform: translate(-100% 0);
+}
+.vul-enter,
+.vul-leave-to {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.vul-enter-active,
+.vul-leave-active {
+    transition:  all .6s ease;
+}
+
+.vul-move {
+    transition: all .6s ease;
+}
+.vul-leave-active{
+    position: absolute;
+}
+
+.fade-enter{
+    opacity: 0;
+}
+.fade-enter-active{
+    transition: opacity .5s;
+}
+/*
+.fade-leave-to{
+    opacity: 0;
+}
+.fade-leave-active{
+    transition: opacity .5s;
+}*/

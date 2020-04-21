@@ -1,0 +1,29 @@
+{
+	"Print to console": {
+        "prefix": "vue",
+        "body": [
+			"<style>",
+			"/* pageFullScreen在index.css */",
+			"#xxxFullScreen {",
+				"background-color: #eee;",
+			"} \n",
+            "</style>",
+            "<template>",
+            "    <div class=\"pageFullScreen\" id=\"xxxFullScreen\">\n",
+            "    </div>",
+            "</template>",
+            "<script>",
+            "export default {",
+            "   data() {",
+            "      return {",
+			"      }",
+			"   },",
+			"   activated() {",
+			"   }",
+			"}",
+			"</script>",
+            "$2"
+        ],
+        "description": "Log output to console"
+    }
+}

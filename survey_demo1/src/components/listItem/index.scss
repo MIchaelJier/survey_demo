@@ -1,0 +1,38 @@
+.listItem {
+    height: 1.6rem;
+    width: calc(100% - .8rem);
+    background: #fff;
+    font-size: .3rem;
+    margin: 0 .4rem;
+    display: flex;
+    align-items: center;
+    &-image {
+        width: 1.4rem;
+        height: 1rem;
+        border-radius: 5px;
+    };
+    .right {
+      margin-left: .2rem;
+      height: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: .5rem;
+      &-title {
+        font-size: .3rem;
+        color: #535353
+     }
+     &-small {
+        font-size: .2rem;
+        color: #cacaca;
+        border-right: 1px solid #cacaca;
+        padding: 0 .2rem;
+        &:first-child {
+          padding-left: 0;
+        }
+        &:last-child {
+          border-right: 0
+        }
+     }
+    }
+   }
