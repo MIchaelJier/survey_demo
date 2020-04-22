@@ -2,10 +2,37 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import { List, Cell , CellGroup, NavBar, Icon, PullRefresh ,Image as VanImage  } from 'vant';
-import '@/style/init.scss'
-import '@/style/index.scss'
+import '@/style/init.scss';
+import '@/style/index.scss';
+import '@/common/rem';
 
+// vue-function-api & extra
+import VueCompositionApi from 'vue-function-api';
+import { plugin as extraPlugin } from 'vue-function-api-extra';
+Vue.use(VueCompositionApi);
+Vue.use(extraPlugin);
+
+// http
+import * as api from './request/api';
+Vue.prototype.$api = api;
+
+// dev
+import '@/mock';
+
+// vant
+import {
+  List,
+  Cell,
+  CellGroup,
+  NavBar,
+  Icon,
+  PullRefresh,
+  Toast,
+  Form,
+  Field,
+  Button,
+  Image as VanImage
+} from 'vant';
 Vue.use(List);
 Vue.use(Cell);
 Vue.use(CellGroup);
@@ -13,6 +40,10 @@ Vue.use(NavBar);
 Vue.use(Icon);
 Vue.use(PullRefresh);
 Vue.use(VanImage);
+Vue.use(Toast);
+Vue.use(Form);
+Vue.use(Field);
+Vue.use(Button);
 Vue.config.productionTip = false;
 
 new Vue({

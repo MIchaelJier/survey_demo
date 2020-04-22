@@ -1,63 +1,86 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <van-nav-bar title="问卷调查" left-text="返回" left-arrow fixed placeholder >
+    <van-nav-bar title="问卷调查" left-text="返回" left-arrow fixed placeholder>
       <template #right>
         <van-icon name="search" size="18" />
       </template>
     </van-nav-bar>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-         <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-              <div v-for="item in list" :key="item">
-                  <list-item></list-item>
-              </div>
-             <!-- <van-cell v-for="item in list" :key="item" :title="item"/> -->
-            
-        </van-list>
+    <van-pull-refresh v-model="state.isLoading" @refresh="onRefresh">
+      <van-list
+        v-model="state.loading"
+        :finished="state.finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div v-for="item in state.list" :key="item.id">
+          <list-item :itemData="item"></list-item>
+        </div>
+        <!-- <van-cell v-for="item in list" :key="item" :title="item"/> -->
+      </van-list>
     </van-pull-refresh>
   </div>
 </template>
 
 <script>
+import { reactive, onMounted } from 'vue-function-api'
 import listItem from '@/components/listItem/index'
 export default {
-  name: 'Home',
-  data() {
-    return {
-       list: [],
-       loading: false,
-       finished: false,
-       isLoading: false
-    }
-  },
-  components:{
+  components: {
     listItem
   },
-  methods: {
-     onLoad() {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
+  setup(props, ctx){
+    console.log(ctx)
+    const state = reactive({
+      list: [],
+      loading: false,
+      finished: false,
+      isLoading: false,
+      reqMax: 10
+    })
+
+    function dataReq(first = false){
+      ctx.api.index_recommend()
+      .then(res => {
+        console.log(res);
+        const addList = res.data.list
+        if(first){
+          state.list = addList
+        }else{
+          state.list.push(...addList)
         }
-        this.loading = false;
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 1000);
-    },
-    onRefresh() {
+        if(addList.length < state.reqMax){
+          state.finished = true;
+        } 
+        state.loading = false;
+      });
+    }
+    function onLoad(){
       setTimeout(() => {
-        this.isLoading = false;
+          dataReq()
       }, 1000);
-    },
-  },
+    }
+    function onRefresh(){
+      setTimeout(() => {
+        state.isLoading = false;
+        dataReq(true)
+      }, 1000);
+    }
+
+    onMounted(() => {
+      //  dataReq(true)
+    })
+
+    return {
+      state,
+
+      dataReq,
+      onLoad,
+      onRefresh
+    }
+
+  }
 };
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

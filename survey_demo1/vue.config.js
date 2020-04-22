@@ -11,25 +11,25 @@ module.exports = {
   // (there will be multiple instances of html-webpack-plugin and preload-webpack-plugin).
   // Make sure to run vue inspect if you are trying to modify the options for those plugins.
   pages: {
-      index: {
-          // entry for the pages
-          entry: 'src/main.js',
-          // the source template
-          template: 'public/index.html',
-          // output as dist/index.html
-          filename: 'index.html',
-          // when using title option,
-          // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
-          title: '首页',
-          // chunks to include on this pages, by default includes
-          // extracted common chunks and vendor chunks.
-          chunks: ['chunk-vendors', 'chunk-common', 'index'],
-      },
-      // when using the entry-only string format,
-      // template is inferred to be `public/subpage.html`
-      // and falls back to `public/index.html` if not found.
-      // Output filename is inferred to be `subpage.html`.
-      // subpage: ''
+    index: {
+      // entry for the pages
+      entry: 'src/main.js',
+      // the source template
+      template: 'public/index.html',
+      // output as dist/index.html
+      filename: 'index.html',
+      // when using title option,
+      // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
+      title: '首页',
+      // chunks to include on this pages, by default includes
+      // extracted common chunks and vendor chunks.
+      chunks: ['chunk-vendors', 'chunk-common', 'index']
+    }
+    // when using the entry-only string format,
+    // template is inferred to be `public/subpage.html`
+    // and falls back to `public/index.html` if not found.
+    // Output filename is inferred to be `subpage.html`.
+    // subpage: ''
   },
 
   // eslint-loader 是否在保存的时候检查
@@ -53,53 +53,52 @@ module.exports = {
   // webpack 链接 API，用于生成和修改 webapck 配置
   // https://github.com/mozilla-neutrino/webpack-chain
   chainWebpack: config => {
-      // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
-      config.optimization.splitChunks({
-          cacheGroups: {},
-      });
+    // 因为是多页面，所以取消 chunks，每个页面只对应一个单独的 JS / CSS
+    config.optimization.splitChunks({
+      cacheGroups: {}
+    });
 
-      // 'src/lib' 目录下为外部库文件，不参与 eslint 检测
-      config.module
-          .rule('eslint')
-          .exclude.add('/Users/maybexia/Downloads/FE/community_built-in/src/lib')
-          .end();
+    // 'src/lib' 目录下为外部库文件，不参与 eslint 检测
+    config.module
+      .rule('eslint')
+      .exclude.add('/Users/maybexia/Downloads/FE/community_built-in/src/lib')
+      .end();
   },
 
   // 配置高于chainWebpack中关于 css loader 的配置
   css: {
-      // 是否开启支持 foo.module.css 样式
-      requireModuleExtension: true,
+    // 是否开启支持 foo.module.css 样式
+    requireModuleExtension: true,
 
-      // 是否使用 css 分离插件 ExtractTextPlugin，采用独立样式文件载入，不采用 <style> 方式内联至 html 文件中
-      extract: true,
+    // 是否使用 css 分离插件 ExtractTextPlugin，采用独立样式文件载入，不采用 <style> 方式内联至 html 文件中
+    extract: true,
 
-      // 是否构建样式地图，false 将提高构建速度
-      sourceMap: false,
+    // 是否构建样式地图，false 将提高构建速度
+    sourceMap: false,
 
-      // css预设器配置项
-      loaderOptions: {
-          css: {
-              // options here will be passed to css-loader
-          },
-
-          postcss: {
-            //   plugins: {
-            //     require('postcss-px2rem')({
-            //       remUnit: 37.5
-            //     })
-            //   }
-          },
+    // css预设器配置项
+    loaderOptions: {
+      css: {
+        // options here will be passed to css-loader
       },
+
+      postcss: {
+        //   plugins: {
+        //     require('postcss-px2rem')({
+        //       remUnit: 37.5
+        //     })
+        //   }
+      }
+    }
   },
 
   // All options for webpack-dev-server are supported
   // https://webpack.js.org/configuration/dev-server/
   devServer: {
-      open: true,
-      hot: true,
+    open: true,
+    hot: true,
 
-
-      before: app => {},
+    before: app => {}
   },
   // 构建时开启多进程处理 babel 编译
   parallel: require('os').cpus().length > 1,
@@ -108,5 +107,5 @@ module.exports = {
   pwa: {},
 
   // 第三方插件配置
-  pluginOptions: {},
+  pluginOptions: {}
 };
