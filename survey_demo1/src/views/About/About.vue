@@ -43,22 +43,18 @@ export default {
     }
     // 提交
     function onSubmit() {
-      let needFlag = 0;
-      let allFlag = 0;
+      let allNeedFlag = true;
       questionMap.forEach( value => {
-        if (value.isNecessity) {
-          allFlag++;
-        }
         if (
           Array.isArray(value.value)
-            ? value.value.length !== 0
-            : value.value !== '' && value.isNecessity
-        ) {
-          needFlag++;
+            ? value.value.length == 0
+            : value.value === '' && value.isNecessity
+        ){
+          allNeedFlag = false
         }
       });
-      allFlag >= needFlag
-        ? Notify({ type:'succes', message: '提交成功'})
+      allNeedFlag
+        ? Notify({ type:'success', message: '提交成功'})
         : Notify('请填写完全必填项')
       }
     // mouted

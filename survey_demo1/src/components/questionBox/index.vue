@@ -53,7 +53,7 @@
         <div v-if="boxValue.type === 4">
           <div class="form-item">
             <div class="form-item-checkItem">
-              <van-rate v-model="state.single"></van-rate>
+              <van-rate :value="state.single === '' ? 0 : state.single" @change="changeStar"></van-rate>
             </div>
           </div>
         </div>
@@ -108,7 +108,9 @@ export default {
       state.single = time;
       state.showPicker = false;
     }
-
+    function changeStar(num){
+      state.single = num
+    }
     watch(
       [() => state.group, () => state.single], 
       value => {
@@ -122,7 +124,8 @@ export default {
     return {
       state,
       fieldName,
-      onConfirm
+      onConfirm,
+      changeStar
     };
   }
 };
