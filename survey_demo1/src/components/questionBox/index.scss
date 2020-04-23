@@ -1,0 +1,30 @@
+.form-item{
+    display: flex;
+    flex-direction: column;
+    font-size: .25rem;
+    &-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+        &-tip {
+            color: #ff0000;
+        }
+    }
+    &-checkItem {
+        width: calc(100vw - 32px);
+        border-radius: 5px;
+        border: 1px solid #edf0f5;
+        padding: 5px;
+        margin: 2px;
+        display: flex;
+        align-items: center;
+    }
+    .check {
+        border: 1px solid #3c70fc;
+    }
+}
+/deep/ .van-checkbox {
+    width: 100%;
+}
+/deep/ .van-radio {
+    width: 100%;
+}

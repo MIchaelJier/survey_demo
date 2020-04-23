@@ -1,0 +1,18 @@
+.headerpic {
+    height: 1rem;
+    width: 100%;
+}
+.form-top {
+    &-title {
+        font-size: .4rem;
+        text-align: center;
+        line-height: .8rem;
+    }
+    &-intro {
+        font-size: .28rem;
+        margin: .3rem .32rem;
+        color: #535353;
+        letter-spacing: 1px;
+        line-height: .45rem;
+    }
+}

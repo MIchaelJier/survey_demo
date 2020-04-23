@@ -16,3 +16,23 @@ Mock.mock('/api/index/recommend', 'get', {
     ]
   }
 });
+
+Mock.mock('/api/detail/questions', 'get', {
+  msg: 'ok',
+  code: 200,
+  status: true,
+  data: {
+    title: '@ctitle',
+    description: '@cparagraph(3)',
+    coverPic: 'https://img.yzcdn.cn/vant/cat.jpeg',
+    'list|10-15': [
+      {
+        id: '@string("number", 10)',
+        type: '@natural(1, 5)',
+        question: '@ctitle',
+        isNecessity: '@boolean',
+        'content|2-4': ['@ctitle']
+      }
+    ]
+  }
+});

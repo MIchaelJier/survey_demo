@@ -19,19 +19,20 @@
 import './index.scss';
 export default {
   name: 'listItem',
-  data() {
-    return {};
-  },
   props: {
     itemData: {
       type: [Object, Array],
       default: () => {}
     }
   },
-  methods: {
-    jump() {
-      this.$router.push(`/about?id=${this.itemData.id}`);
+  setup(props, ctx) {
+    function jump() {
+      console.log(ctx);
+      ctx.router.push(`/about?id=${props.itemData.id}`);
     }
+    return {
+      jump
+    };
   }
 };
 </script>

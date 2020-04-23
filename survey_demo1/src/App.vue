@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { reactive, watch } from 'vue-function-api'
+// import { reactive, watch } from 'vue-function-api'
 export default {
   name: 'App',
   provide() {
@@ -43,7 +43,7 @@ export default {
   //       } else {
   //         state.transitionName = 'slide-right';
   //       }
-  //     },true, true, 'post'
+  //     }
   //   )
 
   //   return {

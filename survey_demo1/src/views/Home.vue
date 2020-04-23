@@ -23,53 +23,52 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue-function-api'
-import listItem from '@/components/listItem/index'
+import { reactive, onMounted } from 'vue-function-api';
+import listItem from '@/components/listItem/index';
 export default {
   components: {
     listItem
   },
-  setup(props, ctx){
-    console.log(ctx)
+  setup(props, ctx) {
+    console.log(ctx);
     const state = reactive({
       list: [],
       loading: false,
       finished: false,
       isLoading: false,
       reqMax: 10
-    })
+    });
 
-    function dataReq(first = false){
-      ctx.api.index_recommend()
-      .then(res => {
+    function dataReq(first = false) {
+      ctx.api.index_recommend().then(res => {
         console.log(res);
-        const addList = res.data.list
-        if(first){
-          state.list = addList
-        }else{
-          state.list.push(...addList)
+        const addList = res.data.list;
+        if (first) {
+          state.list = addList;
+        } else {
+          state.list.push(...addList);
         }
-        if(addList.length < state.reqMax){
+        if (addList.length < state.reqMax) {
           state.finished = true;
-        } 
+        }
         state.loading = false;
       });
     }
-    function onLoad(){
+    function onLoad() {
       setTimeout(() => {
-          dataReq()
+        dataReq();
       }, 1000);
     }
-    function onRefresh(){
+    function onRefresh() {
       setTimeout(() => {
         state.isLoading = false;
-        dataReq(true)
+        dataReq(true);
       }, 1000);
     }
 
     onMounted(() => {
       //  dataReq(true)
-    })
+    });
 
     return {
       state,
@@ -77,8 +76,7 @@ export default {
       dataReq,
       onLoad,
       onRefresh
-    }
-
+    };
   }
 };
 </script>

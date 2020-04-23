@@ -31,6 +31,14 @@ import {
   Form,
   Field,
   Button,
+  Checkbox,
+  CheckboxGroup,
+  Radio,
+  RadioGroup,
+  Rate,
+  Picker,
+  Popup,
+  DatetimePicker,
   Image as VanImage
 } from 'vant';
 Vue.use(List);
@@ -44,6 +52,14 @@ Vue.use(Toast);
 Vue.use(Form);
 Vue.use(Field);
 Vue.use(Button);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
+Vue.use(Radio);
+Vue.use(RadioGroup);
+Vue.use(Rate);
+Vue.use(Popup);
+Vue.use(Picker);
+Vue.use(DatetimePicker);
 Vue.config.productionTip = false;
 
 new Vue({
