@@ -88,6 +88,12 @@ module.exports = {
         //       remUnit: 37.5
         //     })
         //   }
+      },
+      scss: {
+        // 注入 `sass` 的  `variables` 到全局
+        prependData: `
+          @import "~@/style/variables.scss";
+          `
       }
     }
   },

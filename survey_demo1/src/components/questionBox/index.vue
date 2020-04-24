@@ -53,7 +53,10 @@
         <div v-if="boxValue.type === 4">
           <div class="form-item">
             <div class="form-item-checkItem">
-              <van-rate :value="state.single === '' ? 0 : state.single" @change="changeStar"></van-rate>
+              <van-rate
+                :value="state.single === '' ? 0 : state.single"
+                @change="changeStar"
+              ></van-rate>
             </div>
           </div>
         </div>
@@ -108,12 +111,10 @@ export default {
       state.single = time;
       state.showPicker = false;
     }
-    function changeStar(num){
-      state.single = num
+    function changeStar(num) {
+      state.single = num;
     }
-    watch(
-      [() => state.group, () => state.single], 
-      value => {
+    watch([() => state.group, () => state.single], value => {
       if (value.length !== 0) {
         ctx.emit('addMap', props.boxValue.id, {
           value: value[0].length === 0 ? value[1] : value[0],
@@ -131,6 +132,6 @@ export default {
 };
 </script>
 
-<style scoped lang="sass">
-@import './index.scss'
+<style scoped lang="scss">
+@import './index.scss';
 </style>

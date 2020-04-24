@@ -6,6 +6,8 @@ import '@/style/init.scss';
 import '@/style/index.scss';
 import '@/common/rem';
 
+// 引入全局样式
+import '@/style/variables.scss';
 // vue-function-api & extra
 import VueCompositionApi from 'vue-function-api';
 import { plugin as extraPlugin } from 'vue-function-api-extra';
@@ -38,6 +40,7 @@ import {
   Rate,
   Picker,
   Popup,
+  Search,
   DatetimePicker,
   Image as VanImage
 } from 'vant';
@@ -60,6 +63,7 @@ Vue.use(Rate);
 Vue.use(Popup);
 Vue.use(Picker);
 Vue.use(DatetimePicker);
+Vue.use(Search);
 Vue.config.productionTip = false;
 
 new Vue({

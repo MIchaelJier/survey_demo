@@ -44,19 +44,19 @@ export default {
     // 提交
     function onSubmit() {
       let allNeedFlag = true;
-      questionMap.forEach( value => {
+      questionMap.forEach(value => {
         if (
           Array.isArray(value.value)
             ? value.value.length == 0
             : value.value === '' && value.isNecessity
-        ){
-          allNeedFlag = false
+        ) {
+          allNeedFlag = false;
         }
       });
       allNeedFlag
-        ? Notify({ type:'success', message: '提交成功'})
-        : Notify('请填写完全必填项')
-      }
+        ? Notify({ type: 'success', message: '提交成功' })
+        : Notify('请填写完全必填项');
+    }
     // mouted
     onMounted(() => {
       id.value = ctx.route.query.id;

@@ -6,7 +6,7 @@
         font-weight: bold;
         margin-bottom: 5px;
         &-tip {
-            color: #ff0000;
+            color: $color-error;
         }
     }
     &-checkItem {
@@ -19,7 +19,7 @@
         align-items: center;
     }
     .check {
-        border: 1px solid #3c70fc;
+        border: 1px solid $color-primary;
     }
 }
 /deep/ .van-checkbox {

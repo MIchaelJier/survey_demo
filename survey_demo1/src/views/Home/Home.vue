@@ -3,7 +3,9 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <van-nav-bar title="问卷调查" left-text="返回" left-arrow fixed placeholder>
       <template #right>
-        <van-icon name="search" size="18" />
+        <router-link to="search" class="search-link">
+          <van-icon name="search" size="18" />
+        </router-link>
       </template>
     </van-nav-bar>
     <van-pull-refresh v-model="state.isLoading" @refresh="onRefresh">
@@ -30,7 +32,6 @@ export default {
     listItem
   },
   setup(props, ctx) {
-    console.log(ctx);
     const state = reactive({
       list: [],
       loading: false,
@@ -81,4 +82,9 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.search-link {
+  display: flex;
+  align-items: center;
+}
+</style>
