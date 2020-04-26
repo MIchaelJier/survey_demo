@@ -1,3 +1,11 @@
+@mixin icon {
+    position: absolute;
+    left: .31rem;
+    top: .43rem;
+    width: .3rem;
+    height: .3rem;
+}
+
 .Search_input_top_box {
     position: relative;
     margin-bottom: .17rem;
@@ -19,7 +27,11 @@
         outline: none;
     }
 }
-
+.Search_delIcon {
+    @include icon;
+    left: calc(100% - 1.5rem);
+    display: flex
+}
 .Search_btn {
     display: inline-block;
     width: 1rem;
@@ -33,11 +45,7 @@
 }
 
 .Search_icon {
-    position: absolute;
-    left: .31rem;
-    top: .43rem;
-    width: .3rem;
-    height: .3rem;
+    @include icon
 }
 .Search_xian {
     width: 100%;

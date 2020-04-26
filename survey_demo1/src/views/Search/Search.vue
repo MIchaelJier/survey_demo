@@ -6,12 +6,15 @@
        <form action="/" style="display: inline-block"> 
         <input
           class="Search_Input"
-          placeholder="请输入商品、品牌名称进行搜索"
+          placeholder="请输入问卷名称进行搜索"
           v-model="inputText"
           @keyup.enter="backBtn"
           v-focus
        />
       </form>
+      <div class="Search_delIcon" v-show="delShow" @click="delText">
+        <van-icon name="cross" size=".3rem" />
+      </div>
       <div class="Search_btn" @click="backBtn">{{ SearchText }}</div>
     </div>
     <div class="Search_xian"></div>
@@ -26,7 +29,7 @@
             src="@/assets/images/del-icon.png"
             v-if="listarr.length > 0"
           />
-        </p>
+        </p >
       </div>
       <!--记录搜索-->
       <div class="History_box">
@@ -37,7 +40,7 @@
             @click="historyGiveInput(item)"
           >
             {{ item }}
-          </p>
+          </p >
         </div>
       </div>
     </div>
@@ -62,6 +65,7 @@ export default {
     const SearchText = ref('取消');
     const inputText = ref('');
     const listarr = ref([]);
+    const delShow = ref(false)
 
     // 获取历史记录
      localStorage.getItem('searchHistoryList')
@@ -88,6 +92,9 @@ export default {
             console.log('取消');
           }
         });
+    }
+    function delText(){
+      inputText.value = '';
     }
     function historyGiveInput(item) {
       inputText.value = item;
@@ -123,8 +130,10 @@ export default {
       value => {
         if (value === '') {
           SearchText.value = '取消';
+          delShow.value = false
         } else {
           SearchText.value = '搜索';
+          delShow.value = true
         }
       }
     )
@@ -133,10 +142,12 @@ export default {
       SearchText,
       inputText,
       listarr,
+      delShow,
 
       deleteList,
       historyGiveInput,
-      backBtn
+      backBtn,
+      delText
     }
   }
 };
