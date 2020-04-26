@@ -7,7 +7,8 @@
 </template>
 
 <script>
-// import { reactive, watch } from 'vue-function-api'
+import { ref } from 'vue-function-api'
+import router from './router';
 export default {
   name: 'App',
   provide() {
@@ -15,71 +16,36 @@ export default {
       reload: this.reload
     };
   },
-  // setup(props, ctx) {
-  //   const state = reactive({
-  //     transitionName: 'slide-right',
-  //     RouterState: true
-  //   })
+  setup(props, ctx) {
+    const transitionName = ref('slide-right');
+    const RouterState = ref(true);
 
-  //   function reload(flag) {
-  //     //flag=false 返回
-  //     flag
-  //       ? (this.transitionName = 'slide-left')
-  //       : (this.transitionName = 'slide-right');
-  //     state.RouterState = false;
-  //     setTimeout(() => {
-  //       ctx.nextTick(() => {
-  //         state.RouterState = true;
-  //       });
-  //     }, 700);
-  //   }
-  //   watch(
-  //       () => ctx.route,
-  //       (to, from) => {
-  //         console.log({to,from})
-  //       /*console.log(from.meta.index +'->'+to.meta.index);*/
-  //       if (to.meta.index > from.meta.index) {
-  //         state.transitionName = 'slide-left';
-  //       } else {
-  //         state.transitionName = 'slide-right';
-  //       }
-  //     }
-  //   )
+    router.afterEach((to, from, next) => {
+      if (to.meta.index > from.meta.index) {
+        transitionName.value  = 'slide-left';
+      } else {
+        transitionName.value  = 'slide-right';
+      }
+      next
+    })
 
-  //   return {
-  //     state,
-  //     reload
-  //   }
-  // }
-  data() {
-    return {
-      transitionName: 'slide-right',
-      RouterState: true
-    };
-  },
-  methods: {
-    //本页面 动画
-    reload(flag) {
+    function reload(flag) {
       //flag=false 返回
       flag
-        ? (this.transitionName = 'slide-left')
-        : (this.transitionName = 'slide-right');
-      this.RouterState = false;
+        ? (transitionName.value = 'slide-left')
+        : (transitionName.value = 'slide-right');
+      RouterState.value  = false;
       setTimeout(() => {
-        this.$nextTick(() => {
-          this.RouterState = true;
+        ctx.nextTick(() => {
+          RouterState.value  = true;
         });
       }, 700);
     }
-  },
-  watch: {
-    $route(to, from) {
-      /*console.log(from.meta.index +'->'+to.meta.index);*/
-      if (to.meta.index > from.meta.index) {
-        this.transitionName = 'slide-left';
-      } else {
-        this.transitionName = 'slide-right';
-      }
+
+    return {
+      transitionName,
+      RouterState,
+      reload
     }
   }
 };

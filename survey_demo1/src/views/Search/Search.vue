@@ -2,12 +2,16 @@
   <div class="SearchBox">
     <div class="Search_input_top_box">
       <img class="Search_icon" src="@/assets/images/search_icno.png" alt="" />
-      <input
-        class="Search_Input"
-        placeholder="请输入商品、品牌名称进行搜索"
-        v-model="inputText"
-        v-focus
-      />
+       <!--ios输入法中显示搜索按钮？ -->
+       <form action="/" style="display: inline-block"> 
+        <input
+          class="Search_Input"
+          placeholder="请输入商品、品牌名称进行搜索"
+          v-model="inputText"
+          @keyup.enter="backBtn"
+          v-focus
+       />
+      </form>
       <div class="Search_btn" @click="backBtn">{{ SearchText }}</div>
     </div>
     <div class="Search_xian"></div>
@@ -42,18 +46,30 @@
 <script>
 import './Search.scss';
 import { Dialog } from 'vant';
+import { ref, watch } from 'vue-function-api';
 export default {
   name: 'Search',
-  data() {
-    return {
-      SearchText: '取消',
-      inputText: '',
-      listarr: []
-    };
+  directives: {
+    focus: {
+      inserted: el => {
+        setTimeout(() => {
+          el.focus();
+        }, 500);
+      }
+    }
   },
-  methods: {
+  setup(props, ctx) {
+    const SearchText = ref('取消');
+    const inputText = ref('');
+    const listarr = ref([]);
+
+    // 获取历史记录
+     localStorage.getItem('searchHistoryList')
+      ? (listarr.value = JSON.parse(localStorage.getItem('searchHistoryList')))
+      : (listarr.value = []);
+
     //点击删除历史记录按钮
-    deleteList() {
+    function deleteList() {
       Dialog.confirm({
         title: '提示',
         message: '确定删除历史记录?',
@@ -63,7 +79,7 @@ export default {
           if (action === 'confirm') {
             //确认的回调
             localStorage.setItem('searchHistoryList', '');
-            this.listarr = [];
+            listarr.value = [];
           }
         })
         .catch(err => {
@@ -72,57 +88,55 @@ export default {
             console.log('取消');
           }
         });
-    },
-    historyGiveInput(item) {
-      this.inputText = item;
-    },
-    // 返回按钮 / 搜索按钮
-    backBtn() {
-      if (this.SearchText === '搜索') {
+    }
+    function historyGiveInput(item) {
+      inputText.value = item;
+    }
+     // 返回按钮 / 搜索按钮
+    function backBtn() {
+      if (SearchText.value === '搜索') {
         // this.$store.commit('changeSearchValue',this.inputText);
-        if (this.listarr.indexOf(this.inputText) >= 0) {
-          let index = this.listarr.indexOf(this.inputText);
-          this.listarr.splice(index, 1);
+        if (listarr.value.indexOf(inputText.value) >= 0) {
+          let index = listarr.value.indexOf(inputText.value);
+          listarr.value.splice(index, 1);
         }
-        this.listarr.unshift(this.inputText);
-        let history = JSON.stringify(this.listarr);
+        listarr.value.unshift(inputText.value);
+        let history = JSON.stringify(listarr.value);
         //localStorage 存数组
         localStorage.setItem(`searchHistoryList`, history);
-        this.$router.push({
+        ctx.router.push({
           path: '/',
-          // 可以返回到url作为参考
+          // 返回到url到Home页
+          // 或可以存入vuex
           query: {
-            search: this.inputText
+            search: inputText.value
           }
         });
       } else {
-        this.$router.push({
+        ctx.router.push({
           path: '/'
         });
       }
     }
-  },
-  created() {
-    localStorage.getItem('searchHistoryList')
-      ? (this.listarr = JSON.parse(localStorage.getItem('searchHistoryList')))
-      : (this.listarr = []);
-  },
-  watch: {
-    inputText: function() {
-      if (this.inputText === '') {
-        this.SearchText = '取消';
-      } else {
-        this.SearchText = '搜索';
+    watch(
+      () => inputText.value,
+      value => {
+        if (value === '') {
+          SearchText.value = '取消';
+        } else {
+          SearchText.value = '搜索';
+        }
       }
-    }
-  },
-  directives: {
-    focus: {
-      inserted: el => {
-        setTimeout(() => {
-          el.focus();
-        }, 500);
-      }
+    )
+
+    return {
+      SearchText,
+      inputText,
+      listarr,
+
+      deleteList,
+      historyGiveInput,
+      backBtn
     }
   }
 };
