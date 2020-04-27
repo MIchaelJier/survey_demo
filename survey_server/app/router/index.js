@@ -10,4 +10,6 @@ router.post('/addSurveyItem', surveyListControl.create);
 
 router.post('/delSurveyItem', surveyListControl.remove);
 
+router.post('/uploadPic', surveyListControl.uploadPic);
+
 module.exports = router;

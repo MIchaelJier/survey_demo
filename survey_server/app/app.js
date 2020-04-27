@@ -27,6 +27,8 @@ app.all('*', function(req, res, next) {
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// 设置静态文件目录
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/api', router);
 
