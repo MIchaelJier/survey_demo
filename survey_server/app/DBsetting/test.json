@@ -1,0 +1,20 @@
+
+{
+    "createId": 1001,
+    "questionSum": 1,
+    "quoteSum": 0,
+    "classify": [],
+    "questions": [{
+        "title": "大学生学习时间调查",
+        "description": "用于大学生学习时间调查",
+        "coverPic": "https://img.yzcdn.cn/vant/cat.jpeg",
+        "list": [
+          {
+            "type": 1,
+            "question": "你喜欢什么",
+            "isNecessity": true,
+            "content": ["苹果","香蕉"]
+          }
+        ]
+    }]
+}
