@@ -11,8 +11,7 @@ const surveyListControl = {
     all(req, res) {
         SurveyList.find({})
             .exec((err, data) => {
-                resBack.auto(res, data, err);
-                //  res.json(surveyList);
+                resBack.auto(res, data, err, '查询成功');
             });
         },
     // 按id查找
@@ -24,7 +23,7 @@ const surveyListControl = {
         .findOne({ _id: idParams })
         .exec((err, data) => resBack.auto(res, data, err));
     },
-    // 新增
+    // 新增 POST
     create(req, res) {
         const requestBody = req.body;
 
@@ -49,23 +48,31 @@ const surveyListControl = {
         form.uploadDir = path.join(__dirname, '../../public/');
 
         form.parse(req, function(err, fields, files) {
-            console.log({fields, files});
-            console.log(publicDir);
+            // console.log({fields, files});
+            // console.log(publicDir);
             const extname = path.extname(files.upload.name),
                   timestamp = Date.parse(new Date()),
                   oldpath = files.upload.path,
-                  newpath = `${publicDir}/${timestamp + extname}`;
+                  newpath = `${publicDir}/upload_${timestamp + extname}`;
 
+            // 重命名图片
             fs.rename(oldpath, newpath, function(err) {
                 if (err) {
+                    res.json({
+                        code: 500, 
+                        state: false,
+                        data: '',
+                    });
                     throw Error('改名失败');
+                } else {
+                    res.json({
+                        statusCode: res.statusCode, 
+                        state: true,
+                        data: `${req.protocol}://${req.get('host')}/public/upload_${timestamp + extname}`,
+                    });
                 }
             });
-            res.json({
-                code: 200, 
-                state: true,
-                data: `${req.protocol}://${req.get('host')}/public/${timestamp + extname}`,
-            });
+            
         });
         
     },
@@ -86,11 +93,8 @@ const surveyListControl = {
         console.log(`删除id: ${idParams}`);
         SurveyList
             .findOne({ _id: idParams })
-            .deleteOne( (err) => {
-                if (err) { 
-                    res.json(err); 
-                }
-                res.json(`删除id为${idParams}的数据成功`);
+            .deleteOne( (err, data) => {
+                resBack.auto(res, data, err, `删除id为${idParams}的数据成功`);
             } ); //err, removed
       },
 };

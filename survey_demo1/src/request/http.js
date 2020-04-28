@@ -1,8 +1,8 @@
 import axios from 'axios';
-import qs from 'qs';
+// import qs from 'qs';
 import { Toast } from 'vant';
 
-//添加请求拦截器
+// 添加请求拦截器
 axios.interceptors.request.use(
   config => {
     // do something
@@ -17,7 +17,7 @@ axios.interceptors.request.use(
   }
 );
 
-//添加响应拦截器
+// 添加响应拦截器
 axios.interceptors.response.use(
   response => {
     if (response.status === 200) {
@@ -59,7 +59,7 @@ export function get(url, params) {
 export function post(url, params) {
   return new Promise((resolve, reject) => {
     axios
-      .post(url, qs.stringify(params))
+      .post(url, params)
       .then(res => {
         resolve(res.data);
       })

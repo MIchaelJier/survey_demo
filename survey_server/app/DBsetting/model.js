@@ -5,12 +5,12 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 const listSchema = Schema({
-    listId: ObjectId,
+    // listId: { type: Number, index: true},
     type: Number,
     question: String,
     isNecessity: Boolean,
     content: [String],
-});
+}, {versionKey: false});
 
 const SurveyListSchema = Schema({
     id: ObjectId,
@@ -28,14 +28,22 @@ const SurveyListSchema = Schema({
 }, {versionKey: false});
 
 const AnswersSchema = Schema([{
-    id: ObjectId,
+    // id: ObjectId,
     surveyId: String,
     sendDate: Date,
     answerList: [String],
-}]);
+}], {versionKey: false});
+
+const UsersSchema = Schema([{
+    // id: ObjectId,
+    email: String,
+    password: String,
+}], {versionKey: false});
 
 const SurveyList = model('SurveyList', SurveyListSchema);
 
 const AnswersList = model('AnswersList', AnswersSchema);
 
-module.exports = { SurveyList, AnswersList };  
+const UsersList = model('UsersList', UsersSchema);
+
+module.exports = { SurveyList, AnswersList, UsersList };  

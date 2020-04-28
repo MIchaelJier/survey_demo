@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "formidable": "^1.2.2",
     "mongoose": "^5.9.10",
+    "nodemailer": "^6.4.6",
     "querystring": "^0.2.0"
   },
   "devDependencies": {

@@ -1294,6 +1294,11 @@ nice-try@^1.0.4:
   resolved "https://registry.npm.taobao.org/nice-try/download/nice-try-1.0.5.tgz?cache=0&sync_timestamp=1584699726257&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnice-try%2Fdownload%2Fnice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha1-ozeKdpbOfSI+iPybdkvX7xCJ42Y=
 
+nodemailer@^6.4.6:
+  version "6.4.6"
+  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.4.6.tgz?cache=0&sync_timestamp=1584700207598&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnodemailer%2Fdownload%2Fnodemailer-6.4.6.tgz#d37f504f6560b36616f646a606894fe18819107f"
+  integrity sha1-039QT2Vgs2YW9kamBolP4YgZEH8=
+
 nodemon@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/nodemon/download/nodemon-2.0.3.tgz?cache=0&sync_timestamp=1586375447271&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnodemon%2Fdownload%2Fnodemon-2.0.3.tgz#e9c64df8740ceaef1cb00e1f3da57c0a93ef3714"

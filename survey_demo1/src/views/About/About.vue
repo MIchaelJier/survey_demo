@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whiteBG">
     <img :src="questions.coverPic" alt="" class="headerPic" />
     <van-form>
       <div class="form-top">

@@ -1,15 +1,15 @@
 !(function(n) {
-  var e = n.document,
-    t = e.documentElement,
-    i = 720,
-    d = i / 100,
-    o = 'orientationchange' in n ? 'orientationchange' : 'resize',
-    a = function() {
-      var n = t.clientWidth || 320;
-      n > 720 && (n = 720);
-      t.style.fontSize = n / d + 'px';
-      console.log('rem.js生效');
-    };
+  const e = n.document;
+  const t = e.documentElement;
+  const i = 720;
+  const d = i / 100;
+  const o = 'orientationchange' in n ? 'orientationchange' : 'resize';
+  const a = function() {
+    let width = t.clientWidth || 320;
+    width > 720 && (width = 720);
+    t.style.fontSize = width / d + 'px';
+    console.log('rem.js生效');
+  };
   e.addEventListener &&
     (n.addEventListener(o, a, !1),
     e.addEventListener('DOMContentLoaded', a, !1));

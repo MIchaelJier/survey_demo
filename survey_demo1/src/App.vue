@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ref } from 'vue-function-api'
+import { ref } from 'vue-function-api';
 import router from './router';
 export default {
   name: 'App',
@@ -17,27 +17,28 @@ export default {
     };
   },
   setup(props, ctx) {
+    ctx.store.commit('getUserInfo');
     const transitionName = ref('slide-right');
     const RouterState = ref(true);
 
     router.afterEach((to, from, next) => {
       if (to.meta.index > from.meta.index) {
-        transitionName.value  = 'slide-left';
+        transitionName.value = 'slide-left';
       } else {
-        transitionName.value  = 'slide-right';
+        transitionName.value = 'slide-right';
       }
-      next
-    })
+      next;
+    });
 
     function reload(flag) {
-      //flag=false 返回
+      // flag=false 返回
       flag
         ? (transitionName.value = 'slide-left')
         : (transitionName.value = 'slide-right');
-      RouterState.value  = false;
+      RouterState.value = false;
       setTimeout(() => {
         ctx.nextTick(() => {
-          RouterState.value  = true;
+          RouterState.value = true;
         });
       }, 700);
     }
@@ -46,7 +47,7 @@ export default {
       transitionName,
       RouterState,
       reload
-    }
+    };
   }
 };
 </script>

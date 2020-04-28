@@ -2,15 +2,15 @@
   <div class="SearchBox">
     <div class="Search_input_top_box">
       <img class="Search_icon" src="@/assets/images/search_icno.png" alt="" />
-       <!--ios输入法中显示搜索按钮？ -->
-       <form action="/" style="display: inline-block"> 
+      <!--ios输入法中显示搜索按钮？ -->
+      <form action="/" style="display: inline-block">
         <input
           class="Search_Input"
           placeholder="请输入问卷名称进行搜索"
           v-model="inputText"
           @keyup.enter="backBtn"
           v-focus
-       />
+        />
       </form>
       <div class="Search_delIcon" v-show="delShow" @click="delText">
         <van-icon name="cross" size=".3rem" />
@@ -29,7 +29,7 @@
             src="@/assets/images/del-icon.png"
             v-if="listarr.length > 0"
           />
-        </p >
+        </p>
       </div>
       <!--记录搜索-->
       <div class="History_box">
@@ -40,7 +40,7 @@
             @click="historyGiveInput(item)"
           >
             {{ item }}
-          </p >
+          </p>
         </div>
       </div>
     </div>
@@ -65,14 +65,14 @@ export default {
     const SearchText = ref('取消');
     const inputText = ref('');
     const listarr = ref([]);
-    const delShow = ref(false)
+    const delShow = ref(false);
 
     // 获取历史记录
-     localStorage.getItem('searchHistoryList')
+    localStorage.getItem('searchHistoryList')
       ? (listarr.value = JSON.parse(localStorage.getItem('searchHistoryList')))
       : (listarr.value = []);
 
-    //点击删除历史记录按钮
+    // 点击删除历史记录按钮
     function deleteList() {
       Dialog.confirm({
         title: '提示',
@@ -81,35 +81,35 @@ export default {
       })
         .then(action => {
           if (action === 'confirm') {
-            //确认的回调
+            // 确认的回调
             localStorage.setItem('searchHistoryList', '');
             listarr.value = [];
           }
         })
         .catch(err => {
           if (err === 'cancel') {
-            //取消的回调
+            // 取消的回调
             console.log('取消');
           }
         });
     }
-    function delText(){
+    function delText() {
       inputText.value = '';
     }
     function historyGiveInput(item) {
       inputText.value = item;
     }
-     // 返回按钮 / 搜索按钮
+    // 返回按钮 / 搜索按钮
     function backBtn() {
       if (SearchText.value === '搜索') {
         // this.$store.commit('changeSearchValue',this.inputText);
         if (listarr.value.indexOf(inputText.value) >= 0) {
-          let index = listarr.value.indexOf(inputText.value);
+          const index = listarr.value.indexOf(inputText.value);
           listarr.value.splice(index, 1);
         }
         listarr.value.unshift(inputText.value);
-        let history = JSON.stringify(listarr.value);
-        //localStorage 存数组
+        const history = JSON.stringify(listarr.value);
+        // localStorage 存数组
         localStorage.setItem(`searchHistoryList`, history);
         ctx.router.push({
           path: '/',
@@ -130,13 +130,13 @@ export default {
       value => {
         if (value === '') {
           SearchText.value = '取消';
-          delShow.value = false
+          delShow.value = false;
         } else {
           SearchText.value = '搜索';
-          delShow.value = true
+          delShow.value = true;
         }
       }
-    )
+    );
 
     return {
       SearchText,
@@ -148,7 +148,7 @@ export default {
       historyGiveInput,
       backBtn,
       delText
-    }
+    };
   }
 };
 </script>
