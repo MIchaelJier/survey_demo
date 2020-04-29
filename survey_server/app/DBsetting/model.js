@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const model = mongoose.model.bind(mongoose);
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const ObjectId = Schema.Types.ObjectId;
+const Mixed = Schema.Types.Mixed;
 
 
 const listSchema = Schema({
@@ -19,19 +20,23 @@ const SurveyListSchema = Schema({
     questionSum: Number,
     quoteSum: Number,
     classify: Array,
-    questions: [{
+    questions: {
         title: String,
         description: String,
         coverPic: String,
         list: [listSchema],
-    }],
+    },
 }, {versionKey: false});
 
 const AnswersSchema = Schema([{
     // id: ObjectId,
     surveyId: String,
     sendDate: Date,
-    answerList: [String],
+    answerList: [{
+        answerId: String,
+        isNecessity: Boolean,
+        value: Mixed, // !!!
+    }],
 }], {versionKey: false});
 
 const UsersSchema = Schema([{

@@ -17,9 +17,10 @@ export default {
     };
   },
   setup(props, ctx) {
-    ctx.store.commit('getUserInfo');
     const transitionName = ref('slide-right');
     const RouterState = ref(true);
+
+    ctx.store.commit('getUserInfo');
 
     router.afterEach((to, from, next) => {
       if (to.meta.index > from.meta.index) {
@@ -42,7 +43,6 @@ export default {
         });
       }, 700);
     }
-
     return {
       transitionName,
       RouterState,

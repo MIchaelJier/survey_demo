@@ -34,8 +34,14 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    meta: { index: 2 },
+    meta: { index: 3 },
     component: () => import('../views/Login/Login.vue')
+  },
+  {
+    path: '/edit',
+    name: 'Edit',
+    meta: { index: 2 },
+    component: () => import('../views/Edit/Edit.vue')
   }
 ];
 

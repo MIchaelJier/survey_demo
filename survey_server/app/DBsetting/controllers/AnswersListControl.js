@@ -1,18 +1,25 @@
 const Model = require('../model');
 const { AnswersList } = Model;
+const { resBack } = require('../../utils/resBack');
 
 const AnswersListControl = {
     // 新增
     create(req, res) {
         const requestBody = req.body;
 
-        const newAnswersList = new AnswersList(requestBody);
+        const newAnswersList = new AnswersList({
+            surveyId: requestBody._id,
+            sendDate: new Date(),
+            answerList: requestBody.answerList,
+        });
+
+        console.log(requestBody);
     
-        newSurveyList.save((err, saved) => {
+        newAnswersList.save((err, saved) => {
             console.log({err, saved});
             AnswersList
             .findOne({ _id: newAnswersList._id })
-            .exec((err, AnswersList) => res.json(AnswersList));
+            .exec((err, data) => resBack.auto(res, data, err));
         });
     },
 };

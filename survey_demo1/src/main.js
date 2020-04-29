@@ -44,6 +44,8 @@ import {
   DatetimePicker,
   Tabbar,
   TabbarItem,
+  Uploader,
+  Switch,
   Image as VanImage
 } from 'vant';
 Vue.use(List);
@@ -68,6 +70,8 @@ Vue.use(DatetimePicker);
 Vue.use(Search);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
+Vue.use(Uploader);
+Vue.use(Switch);
 Vue.config.productionTip = false;
 
 new Vue({

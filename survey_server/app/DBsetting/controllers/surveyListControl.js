@@ -7,11 +7,35 @@ const path = require('path');
 const { publicDir } = require('../../public/publicDir');
 
 const surveyListControl = {
-    // 查找全部
+    // 查找全部 || 模糊搜索 || 分页
     all(req, res) {
-        SurveyList.find({})
+        const size = parseInt(req.query.size) || 10;
+        const page = ((parseInt(req.query.page) || 1) - 1)*size;
+        const search = new RegExp(req.query.search || '', 'i');
+
+        SurveyList
+            .find({
+                'questions.title': { $regex: search},
+            })
+            .limit(size)
+            .skip(page)
             .exec((err, data) => {
-                resBack.auto(res, data, err, '查询成功');
+                if (!err) {
+                    let newData = [];
+
+                    data.forEach(item => {
+                        newData.push({
+                            id: item._id,
+                            title: item.questions.title,
+                            questionNum: item.questions.list.length,
+                            quoteNum: item.quoteSum,
+                        });
+                    });
+                    resBack.sussess(res, newData, '查询成功');
+                } else {
+                    resBack.fail(res, err, '查询失败');
+                }
+                
             });
         },
     // 按id查找
@@ -21,7 +45,7 @@ const surveyListControl = {
         console.log(`按id: ${idParams}查找`);
         SurveyList
         .findOne({ _id: idParams })
-        .exec((err, data) => resBack.auto(res, data, err));
+        .exec((err, data) => resBack.auto(res, data.questions, err));
     },
     // 新增 POST
     create(req, res) {

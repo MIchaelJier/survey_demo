@@ -1,5 +1,11 @@
 <template>
   <div class="whiteBG">
+    <van-nav-bar
+      :title="questions.title"
+      left-text="返回"
+      left-arrow
+      @click-left="onClickLeft"
+    />
     <img :src="questions.coverPic" alt="" class="headerPic" />
     <van-form>
       <div class="form-top">
@@ -8,7 +14,7 @@
           {{ questions.description }}
         </p>
       </div>
-      <div v-for="item in questions.list" :key="item.id">
+      <div v-for="item in questions.list" :key="item._id">
         <question-box :boxValue="item" @addMap="addMap"></question-box>
       </div>
     </van-form>
@@ -53,14 +59,38 @@ export default {
           allNeedFlag = false;
         }
       });
-      allNeedFlag
-        ? Notify({ type: 'success', message: '提交成功' })
-        : Notify('请填写完全必填项');
+      if (allNeedFlag) {
+        const answer = [...questionMap].map(item => {
+          item[1]._id = item[0];
+          return item[1];
+        });
+        ctx.api
+          .submit_answer(
+            JSON.stringify({
+              _id: id.value,
+              answerList: answer
+            })
+          )
+          .then(res => {
+            if (res.status) {
+              Notify({ type: 'success', message: '提交成功' });
+              ctx.router.push('/');
+            } else {
+              Notify(res.code);
+            }
+          });
+      } else {
+        Notify('请填写完全必填项');
+      }
+    }
+    // 返回
+    function onClickLeft() {
+      ctx.router.push('/');
     }
     // mouted
     onMounted(() => {
       id.value = ctx.route.query.id;
-      ctx.api.detail_questions().then(res => {
+      ctx.api.detail_questions({ id: id.value }).then(res => {
         console.log(res);
         questions.value = res.data;
       });
@@ -71,7 +101,8 @@ export default {
       questions,
       onSubmit,
       questionMap,
-      addMap
+      addMap,
+      onClickLeft
     };
   }
 };

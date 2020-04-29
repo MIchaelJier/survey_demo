@@ -3,6 +3,9 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <van-nav-bar title="问卷调查" fixed placeholder>
       <template #right>
+        <router-link to="edit" class="search-link" style="margin-right: 10px">
+          <van-icon name="plus" size="18" />
+        </router-link>
         <router-link to="search" class="search-link">
           <van-icon name="search" size="18" />
         </router-link>
@@ -13,7 +16,6 @@
           size="18"
           @click="state.popupShow = !state.popupShow"
         />
-        <!-- plus -->
       </template>
     </van-nav-bar>
     <van-pull-refresh v-model="state.isLoading" @refresh="onRefresh">
@@ -72,6 +74,7 @@ export default {
     listItem
   },
   setup(props, ctx) {
+    const search = ctx.route.query.search;
     const state = reactive({
       list: [],
       loading: false,
@@ -82,20 +85,35 @@ export default {
       userInfo: {},
       popupShow: false
     });
+    // 分页请求设置
+    let size = 10,
+      page = 1;
+
     function dataReq(first = false) {
-      ctx.api.index_recommend().then(res => {
-        console.log(res);
-        const addList = res.data.list;
-        if (first) {
-          state.list = addList;
-        } else {
-          state.list.push(...addList);
-        }
-        if (addList.length < state.reqMax) {
-          state.finished = true;
-        }
+      if (state.isLoading) {
         state.loading = false;
-      });
+        return;
+      }
+      ctx.api
+        .index_recommend({
+          size,
+          page,
+          search
+        })
+        .then(res => {
+          console.log(res);
+          const addList = res.data;
+          if (first) {
+            state.list = addList;
+          } else {
+            state.list.push(...addList);
+          }
+          if (addList.length < state.reqMax) {
+            state.finished = true;
+          }
+          page++;
+          state.loading = false;
+        });
     }
     function onLoad() {
       setTimeout(() => {
@@ -104,7 +122,8 @@ export default {
     }
     function onRefresh() {
       setTimeout(() => {
-        state.isLoading = false;
+        page = 1;
+        state.isLoading = state.finished = false;
         dataReq(true);
       }, 1000);
     }

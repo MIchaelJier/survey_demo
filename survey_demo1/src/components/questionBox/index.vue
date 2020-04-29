@@ -45,6 +45,7 @@
                 autosize
                 type="textarea"
                 v-model="state.single"
+                rows="1"
               />
             </div>
           </div>
@@ -116,7 +117,7 @@ export default {
     }
     watch([() => state.group, () => state.single], value => {
       if (value.length !== 0) {
-        ctx.emit('addMap', props.boxValue.id, {
+        ctx.emit('addMap', props.boxValue._id, {
           value: value[0].length === 0 ? value[1] : value[0],
           isNecessity: props.boxValue.isNecessity
         });
