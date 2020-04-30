@@ -1,14 +1,18 @@
 import { get, post } from './http';
 
 export const index_recommend = p =>
-  get('http://localhost:3333/api/allSurveyList', p);
+  get('/allSurveyList', p);
 
 export const detail_questions = p =>
-  get('http://localhost:3333/api/SearchSurveyListById', p);
+  get('/SearchSurveyListById', p);
 
-export const login = p => post('http://localhost:3333/api/login', p);
+export const login = p => post('/login', p);
 
-export const register = p => post('http://localhost:3333/api/register', p);
+export const register = p => post('/register', p);
 
 export const submit_answer = p =>
-  post('http://localhost:3333/api/addAnswerItem', p);
+  post('/addAnswerItem', p);
+  
+  
+export const submit_survey = (p, config) =>
+  post('/addSurveyItem', p, config);

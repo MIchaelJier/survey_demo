@@ -8,11 +8,10 @@ router.get('/allSurveyList', surveyListControl.all);
 
 router.get('/SearchSurveyListById', surveyListControl.byId);
 
-router.post('/addSurveyItem', surveyListControl.create);
+router.post('/addSurveyItem', surveyListControl.createWithUploadPic);
 
 router.post('/delSurveyItem', surveyListControl.remove);
 
-router.post('/uploadPic', surveyListControl.uploadPic);
 
 router.post('/register', UsersListControl.register);
 

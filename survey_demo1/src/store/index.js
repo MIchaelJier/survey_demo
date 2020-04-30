@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userInfo: {}
+    userInfo: {},
+    searchValue: ''
   },
   mutations: {
     getUserInfo(state) {
@@ -16,13 +17,19 @@ export default new Vuex.Store({
     },
     clearUserInfo(state) {
       state.userInfo = {};
-    }
+    },
+    //更改搜索值
+    changeSearchValue(state,newValue) {
+      state.searchValue = newValue;
+  },
   },
   getters: {
     // 获取登录信息
     allInfo: state => state.userInfo,
     // 获取登录状态
-    IsLogin: state => Object.keys(state.userInfo).length !== 0
+    IsLogin: state => Object.keys(state.userInfo).length !== 0,
+    // 获取搜索值
+    getSearchValue: state => state.searchValue
   },
   actions: {},
   modules: {}

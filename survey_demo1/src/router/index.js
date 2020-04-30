@@ -40,7 +40,7 @@ const routes = [
   {
     path: '/edit',
     name: 'Edit',
-    meta: { index: 2 },
+    meta: { index: 2, requireAuth: true },
     component: () => import('../views/Edit/Edit.vue')
   }
 ];

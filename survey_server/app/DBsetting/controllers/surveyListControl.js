@@ -62,7 +62,7 @@ const surveyListControl = {
             .exec((err, data) => resBack.auto(res, data, err));
         });
     },
-    uploadPic(req, res) {
+    createWithUploadPic(req, res) {
         const form = new formdable.IncomingForm();
 
         // 编码
@@ -72,7 +72,7 @@ const surveyListControl = {
         form.uploadDir = path.join(__dirname, '../../public/');
 
         form.parse(req, function(err, fields, files) {
-            // console.log({fields, files});
+            console.log({fields, files});
             // console.log(publicDir);
             const extname = path.extname(files.upload.name),
                   timestamp = Date.parse(new Date()),
@@ -82,17 +82,24 @@ const surveyListControl = {
             // 重命名图片
             fs.rename(oldpath, newpath, function(err) {
                 if (err) {
-                    res.json({
-                        code: 500, 
-                        state: false,
-                        data: '',
-                    });
+                    resBack.fail(res, err, '图片命名失败');
                     throw Error('改名失败');
                 } else {
-                    res.json({
-                        statusCode: res.statusCode, 
-                        state: true,
-                        data: `${req.protocol}://${req.get('host')}/public/upload_${timestamp + extname}`,
+                    const coverPath = `${req.protocol}://${req.get('host')}/public/upload_${timestamp + extname}`;
+                    const other = JSON.parse(fields.other);
+
+                    other.questions.coverPic = coverPath;
+                    const requestBody = {
+                        createDate: new Date(),
+                        ...other,
+                    };
+                    const newSurveyList = new SurveyList(requestBody);
+    
+                    newSurveyList.save((err, saved) => {
+                        console.log({err, saved});
+                        SurveyList
+                        .findOne({ _id: newSurveyList._id })
+                        .exec((err, data) => resBack.auto(res, data, err));
                     });
                 }
             });

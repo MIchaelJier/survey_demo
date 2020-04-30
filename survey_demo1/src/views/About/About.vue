@@ -53,7 +53,7 @@ export default {
       questionMap.forEach(value => {
         if (
           Array.isArray(value.value)
-            ? value.value.length == 0
+            ? value.value.length === 0
             : value.value === '' && value.isNecessity
         ) {
           allNeedFlag = false;

@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import { ref } from 'vue-function-api';
+import { ref, computed } from 'vue-function-api';
 import router from './router';
+import { Toast } from 'vant';
 export default {
   name: 'App',
   provide() {
@@ -22,13 +23,17 @@ export default {
 
     ctx.store.commit('getUserInfo');
 
-    router.afterEach((to, from, next) => {
+    router.beforeEach((to, from, next) => {
       if (to.meta.index > from.meta.index) {
         transitionName.value = 'slide-left';
       } else {
         transitionName.value = 'slide-right';
       }
-      next;
+      if(to.meta.requireAuth && !localStorage.getItem('survey_userInfo')){
+        Toast.fail('请先登录');
+        next('/login?type=1')
+      }
+      next()
     });
 
     function reload(flag) {

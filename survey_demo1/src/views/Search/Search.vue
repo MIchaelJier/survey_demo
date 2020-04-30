@@ -3,7 +3,7 @@
     <div class="Search_input_top_box">
       <img class="Search_icon" src="@/assets/images/search_icno.png" alt="" />
       <!--ios输入法中显示搜索按钮？ -->
-      <form action="/" style="display: inline-block">
+      <div style="display: inline-block">
         <input
           class="Search_Input"
           placeholder="请输入问卷名称进行搜索"
@@ -11,7 +11,7 @@
           @keyup.enter="backBtn"
           v-focus
         />
-      </form>
+      </div>
       <div class="Search_delIcon" v-show="delShow" @click="delText">
         <van-icon name="cross" size=".3rem" />
       </div>
@@ -102,7 +102,6 @@ export default {
     // 返回按钮 / 搜索按钮
     function backBtn() {
       if (SearchText.value === '搜索') {
-        // this.$store.commit('changeSearchValue',this.inputText);
         if (listarr.value.indexOf(inputText.value) >= 0) {
           const index = listarr.value.indexOf(inputText.value);
           listarr.value.splice(index, 1);
@@ -111,13 +110,14 @@ export default {
         const history = JSON.stringify(listarr.value);
         // localStorage 存数组
         localStorage.setItem(`searchHistoryList`, history);
+        ctx.store.commit('changeSearchValue', inputText.value);
         ctx.router.push({
           path: '/',
           // 返回到url到Home页
           // 或可以存入vuex
-          query: {
-            search: inputText.value
-          }
+          // query: {
+          //   search: inputText.value
+          // }
         });
       } else {
         ctx.router.push({

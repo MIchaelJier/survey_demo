@@ -69,12 +69,13 @@
 <script>
 import { reactive, onMounted, computed, watch } from 'vue-function-api';
 import listItem from '@/components/listItem/index';
+import { Dialog } from 'vant';
 export default {
   components: {
     listItem
   },
   setup(props, ctx) {
-    const search = ctx.route.query.search;
+    let search = ctx.store.getters.getSearchValue;
     const state = reactive({
       list: [],
       loading: false,
@@ -86,8 +87,8 @@ export default {
       popupShow: false
     });
     // 分页请求设置
-    let size = 10,
-      page = 1;
+    const size = 10;
+    let page = 1;
 
     function dataReq(first = false) {
       if (state.isLoading) {
@@ -121,9 +122,12 @@ export default {
       }, 1000);
     }
     function onRefresh() {
+      search = '';
+      ctx.store.commit('changeSearchValue', '');
       setTimeout(() => {
         page = 1;
-        state.isLoading = state.finished = false;
+        state.isLoading = false;
+        state.finished = false;
         dataReq(true);
       }, 1000);
     }
@@ -135,9 +139,23 @@ export default {
     }
     // 退出登录
     function signOut() {
-      ctx.store.commit('clearUserInfo');
-      localStorage.removeItem('survey_userInfo');
-      state.popupShow = false;
+       Dialog.confirm({
+        title: '提示',
+        message: '确定退出登录?',
+        showCancelButton: true
+      })
+        .then(action => {
+          if (action === 'confirm') {
+            // 确认的回调
+           ctx.store.commit('clearUserInfo');
+           localStorage.removeItem('survey_userInfo');
+          }
+        })
+        .catch(err => {
+          if (err === 'cancel') {
+            console.log('取消');
+          }
+        });
     }
 
     onMounted(() => {
@@ -164,5 +182,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import './Home.scss';
+  @import './Home.scss';
 </style>

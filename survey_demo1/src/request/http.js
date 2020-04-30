@@ -32,7 +32,7 @@ axios.interceptors.response.use(
   }
 );
 
-axios.defaults.baseURL = '/';
+axios.defaults.baseURL = 'http://localhost:3333/api';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.timeout = 10000;
@@ -56,10 +56,10 @@ export function get(url, params) {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function post(url, params) {
+export function post(url, params, config) {
   return new Promise((resolve, reject) => {
     axios
-      .post(url, params)
+      .post(url, params, config)
       .then(res => {
         resolve(res.data);
       })

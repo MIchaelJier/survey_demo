@@ -1,13 +1,24 @@
 .add_button {
-    margin-top: 16px;
+    margin:16px 0;
     display: flex;
     justify-content: center;
 }
-/deep/ .van-button {
-    width: 50%;
-}
-.field-buttons {
+.add_button {
     /deep/ .van-button {
-        width: 20%;
+        width: 50%;
+    }
+}
+
+/deep/ .van-field__button {
+    display: flex;
+    align-items: center;
+}
+.submit_button {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    /deep/ .van-button {
+        height: 100%
     }
 }
