@@ -28,6 +28,7 @@ const surveyListControl = {
                             id: item._id,
                             title: item.questions.title,
                             questionNum: item.questions.list.length,
+                            coverPic: item.questions.coverPic,
                             quoteNum: item.quoteSum,
                         });
                     });

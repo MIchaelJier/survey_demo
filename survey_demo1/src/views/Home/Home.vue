@@ -24,6 +24,7 @@
         :finished="state.finished"
         finished-text="没有更多了"
         @load="onLoad"
+        ref="list"
       >
         <div v-for="item in state.list" :key="item.id" style="background: #fff">
           <list-item :itemData="item"></list-item>
@@ -81,7 +82,6 @@ export default {
       loading: false,
       finished: false,
       isLoading: false,
-      reqMax: 10,
       isLogin: computed(() => ctx.store.getters.IsLogin),
       userInfo: {},
       popupShow: false
@@ -109,7 +109,8 @@ export default {
           } else {
             state.list.push(...addList);
           }
-          if (addList.length < state.reqMax) {
+          if (addList.length < size) {
+            console.log('已经加载全部')
             state.finished = true;
           }
           page++;

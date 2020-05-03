@@ -5,6 +5,8 @@
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
+      placeholder 
+      fixed
     />
     <img :src="questions.coverPic" alt="" class="headerPic" />
     <van-form>
@@ -18,7 +20,7 @@
         <question-box :boxValue="item" @addMap="addMap"></question-box>
       </div>
     </van-form>
-    <div style="margin: 16px;">
+    <div style="padding: 16px;">
       <van-button round block type="info" @click="onSubmit">
         提交
       </van-button>

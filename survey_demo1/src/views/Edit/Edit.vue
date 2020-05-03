@@ -5,6 +5,8 @@
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
+      placeholder 
+      fixed
     />
     <div><!-- <van-form @submit="onSubmit">   -->
       <van-field name="uploader" label="封面">
@@ -56,7 +58,7 @@
           新增问题
         </van-button>
       </div>
-      <div class="submit_button">
+      <div class="submit_button xBottom">
         <van-button
           block
           color="linear-gradient(to right, #4bb0ff, #6149f6)"
@@ -253,6 +255,7 @@ export default {
         })
           .then(res => {
             Notify({ type: 'success', message: '创建成功' });
+            ctx.router.push('/');
           })
           .catch(err => {
             Notify(err);

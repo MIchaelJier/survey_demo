@@ -1,7 +1,7 @@
 <template>
   <div class="listItem" @click="jump">
     <img
-      src="https://img.yzcdn.cn/vant/cat.jpeg"
+      :src="itemData.coverPic"
       alt=""
       class="listItem-image"
     />

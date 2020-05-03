@@ -28,7 +28,10 @@
     border-width:0;
     &:focus {
         outline: none;
-    }
+    }   
+	&::-webkit-input-placeholder{
+		line-height: .5rem;
+	}
 }
 .Search_delIcon {
     @include icon;
@@ -73,7 +76,7 @@
     }
 } 
 .History-list {
-    margin:  .34rem .25rem 0 .25rem;
+    margin: .25rem .25rem 0 .25rem;
     p {
         display: inline-block;
         height: .6rem;

@@ -29,4 +29,11 @@
   /deep/ .van-button {
     width: 30%;
   }
+  /deep/ .van-pull-refresh {
+    height: calc(100% - 46px);
+    overflow: auto;
+  }
+  /deep/ .van-list {
+    min-height: 100%;
+  }
   

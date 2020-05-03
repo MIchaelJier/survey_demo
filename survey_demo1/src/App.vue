@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-      <router-view class="Router" v-show="RouterState"></router-view>
+      <router-view class="Router xBottom" v-show="RouterState"></router-view>
     </transition>
   </div>
 </template>
@@ -64,6 +64,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+.xBottom {
+  padding-bottom: $ios-bottom-constant !important;
+	padding-bottom: $ios-bottom-env !important;
+}
+
 
 #nav {
   padding: 30px;

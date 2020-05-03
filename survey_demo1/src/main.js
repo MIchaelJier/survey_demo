@@ -18,7 +18,7 @@ Vue.use(extraPlugin);
 import * as api from './request/api';
 Vue.prototype.$api = api;
 
-// dev
+// mock
 import '@/mock';
 
 // vant

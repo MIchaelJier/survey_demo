@@ -32,7 +32,7 @@ axios.interceptors.response.use(
   }
 );
 
-axios.defaults.baseURL = 'http://localhost:3333/api';
+axios.defaults.baseURL = 'http://www.yingjiechen.cn:3334/api';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.timeout = 10000;

@@ -8,7 +8,7 @@ Mock.mock('/api/index/recommend', 'get', {
   data: {
     'list|10-20': [
       {
-        id: '@string("number", 10)',
+        _id: '@string("number", 10)',
         title: '@ctitle',
         questionNum: '@natural(5, 10)',
         quoteNum: Random.natural(1, 1000)
@@ -27,7 +27,7 @@ Mock.mock('/api/detail/questions', 'get', {
     coverPic: 'https://img.yzcdn.cn/vant/cat.jpeg',
     'list|10-15': [
       {
-        id: '@string("number", 10)',
+        _id: '@string("number", 10)',
         type: '@natural(1, 5)',
         question: '@ctitle',
         isNecessity: '@boolean',

@@ -1,5 +1,5 @@
 .add_button {
-    margin:16px 0;
+    padding:16px 0 66px 0;
     display: flex;
     justify-content: center;
 }
@@ -8,17 +8,18 @@
         width: 50%;
     }
 }
-
-/deep/ .van-field__button {
-    display: flex;
-    align-items: center;
-}
 .submit_button {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px;
     /deep/ .van-button {
-        height: 100%
+        height: 50px
     }
+}
+/deep/ .van-field__button {
+    display: flex;
+    align-items: center;
+}
+/deep/ .van-radio {
+    padding: 2px 0
 }

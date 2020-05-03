@@ -7,3 +7,6 @@ $color-success: #4cd964;
 $color-warning: #f0ad4e;
 $color-error: #dd524d;
 $color-mixed: linear-gradient(to right, #4bb0ff, #6149f6);
+
+$ios-bottom-constant: constant(safe-area-inset-bottom);
+$ios-bottom-env: env(safe-area-inset-bottom);
