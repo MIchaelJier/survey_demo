@@ -18,10 +18,10 @@ export default new Vuex.Store({
     clearUserInfo(state) {
       state.userInfo = {};
     },
-    //更改搜索值
-    changeSearchValue(state,newValue) {
+    // 更改搜索值
+    changeSearchValue(state, newValue) {
       state.searchValue = newValue;
-  },
+    }
   },
   getters: {
     // 获取登录信息

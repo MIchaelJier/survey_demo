@@ -21,6 +21,13 @@ Vue.prototype.$api = api;
 // mock
 import '@/mock';
 
+// ECharts
+import ECharts from 'vue-echarts';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/chart/pie';
+Vue.component('echarts', ECharts);
+
 // vant
 import {
   List,

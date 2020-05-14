@@ -14,7 +14,7 @@ const listSchema = Schema({
 }, {versionKey: false});
 
 const SurveyListSchema = Schema({
-    id: ObjectId,
+    // id: ObjectId,
     createId: String,
     createDate: Date,
     questionSum: Number,
@@ -25,12 +25,14 @@ const SurveyListSchema = Schema({
         description: String,
         coverPic: String,
         list: [listSchema],
+        answers: [{type: ObjectId, ref: 'AnswersList'}],
     },
 }, {versionKey: false});
 
 const AnswersSchema = Schema([{
     // id: ObjectId,
-    surveyId: String,
+    surveyId: {type: ObjectId, ref: 'SurveyList'},
+    // surveyId: String,
     sendDate: Date,
     answerList: [{
         answerId: String,

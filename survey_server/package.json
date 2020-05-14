@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "nodemon app/app.js",
     "lint": "eslint .",
-    "fix": "eslint --fix ."
+    "fix": "eslint --fix .",
+    "pkg": "pkg package.json"
   },
   "keywords": [
     "express"
@@ -24,7 +25,17 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "pkg": "^4.4.8"
   },
-  "main": "index.js"
+  "main": "index.js",
+  "engines": {
+    "node": "12.16.2"
+  },
+  "bin": "service.js",
+  "pkg": {
+      "scripts": [
+          "dist/main.js"
+      ]
+  }
 }

@@ -5,13 +5,14 @@
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
-      placeholder 
+      placeholder
       fixed
     />
-    <div><!-- <van-form @submit="onSubmit">   -->
+    <div>
+      <!-- <van-form @submit="onSubmit">   -->
       <van-field name="uploader" label="封面">
         <template #input>
-          <van-uploader v-model="uploader" multiple :max-count="1"/>
+          <van-uploader v-model="uploader" multiple :max-count="1" />
         </template>
       </van-field>
       <van-field
@@ -37,13 +38,14 @@
           :placeholder="item.question === '' ? '点击编辑问题' : item.question"
           @click="editQuestion(index)"
           :required="false"
+          readonly
         >
           <template #button>
             <van-icon
               name="clear"
               color="#dd524d"
               size="20px"
-              @click="delQuestion"
+              @click="delQuestion(index)"
             ></van-icon>
           </template>
         </van-field>
@@ -65,7 +67,7 @@
           @click="onSubmit"
         >
           提交
-       </van-button>
+        </van-button>
       </div>
     </div>
     <!-- 编辑问题 -->
@@ -141,6 +143,7 @@
 <script>
 import { ref, computed } from 'vue-function-api';
 import { Notify } from 'vant';
+import { isHavaEmpty } from '@/common/comFunc.js';
 export default {
   setup(props, ctx) {
     const uploader = ref([]);
@@ -204,64 +207,56 @@ export default {
       questionList.value[nowQuestion.value].content[index] = value;
     }
     // 删除某一个问题
-    function delQuestion() {
+    function delQuestion(index) {
+      questionList.value.splice(index, 1);
       nowQuestion.value = -1;
-      questionList.value.splice(nowQuestion, 1);
     }
     // 删除某一个选项
     function delChoose(index) {
       questionList.value[nowQuestion.value].content.splice(index, 1);
     }
     // 提交
-   
+
     function onSubmit() {
-       let emptyFlag = 0;
-      function isHavaEmpty(one){
-        if(Reflect.toString.call(one) === '[object Array]'){
-              one.forEach(inner => {isHavaEmpty(inner)})
-        }else if(Reflect.toString.call(one) === '[object Object]'){
-            Object.keys(one).forEach(item => {isHavaEmpty(one[item])})
-        }else{
-          if(one === ''){
-            emptyFlag++;
-          }
-        }
-      }
       const other = {
         createId: ctx.store.getters.allInfo._id,
         questionSum: questionList.value.length,
         quoteSum: 0,
-        questions:{
+        questions: {
           title: name.value,
           description: description.value,
           list: questionList.value
         }
-      }
+      };
 
       isHavaEmpty(other.questions);
-      if(emptyFlag > 0){
-        Notify('有空的输入框')
-      }else if(uploader.value.length === 0){
-         Notify('没有封面')
-      }else if(other.questions.list.every(item => item.type < 3 && item.content.length < 2)){
-         Notify('选择题请设置2个以上选项')
-      }else{
+      if (isHavaEmpty(other) > 0) {
+        Notify('有空的输入框');
+      } else if (uploader.value.length === 0) {
+        Notify('没有封面');
+      } else if (
+        other.questions.list.every(
+          item => item.type < 3 && item.content.length < 2
+        )
+      ) {
+        Notify('选择题请设置2个以上选项');
+      } else {
         const file = uploader.value[0].file;
-        let param = new FormData(); 
+        const param = new FormData();
         param.append('upload', file, file.name);
         param.append('other', JSON.stringify(other));
-        ctx.api.submit_survey(param, {
-            headers:{'Content-Type':'multipart/form-data'}
-        })
+        ctx.api
+          .submit_survey(param, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          })
           .then(res => {
             Notify({ type: 'success', message: '创建成功' });
             ctx.router.push('/');
           })
           .catch(err => {
             Notify(err);
-          })
+          });
       }
-      
     }
     return {
       uploader,
@@ -283,7 +278,7 @@ export default {
       changeQuestionContent,
       delQuestion,
       delChoose,
-      onSubmit,
+      onSubmit
     };
   }
 };

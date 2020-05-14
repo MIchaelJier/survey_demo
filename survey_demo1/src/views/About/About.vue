@@ -5,7 +5,7 @@
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
-      placeholder 
+      placeholder
       fixed
     />
     <img :src="questions.coverPic" alt="" class="headerPic" />

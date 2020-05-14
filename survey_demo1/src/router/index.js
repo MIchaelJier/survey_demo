@@ -42,6 +42,12 @@ const routes = [
     name: 'Edit',
     meta: { index: 2, requireAuth: true },
     component: () => import('../views/Edit/Edit.vue')
+  },
+  {
+    path: '/show',
+    name: 'Show',
+    meta: { index: 1 },
+    component: () => import('../views/Show/Show.vue')
   }
 ];
 

@@ -29,11 +29,11 @@ export default {
       } else {
         transitionName.value = 'slide-right';
       }
-      if(to.meta.requireAuth && !localStorage.getItem('survey_userInfo')){
+      if (to.meta.requireAuth && !localStorage.getItem('survey_userInfo')) {
         Toast.fail('请先登录');
-        next('/login?type=1')
+        next('/login?type=1');
       }
-      next()
+      next();
     });
 
     function reload(flag) {
@@ -67,9 +67,8 @@ export default {
 
 .xBottom {
   padding-bottom: $ios-bottom-constant !important;
-	padding-bottom: $ios-bottom-env !important;
+  padding-bottom: $ios-bottom-env !important;
 }
-
 
 #nav {
   padding: 30px;

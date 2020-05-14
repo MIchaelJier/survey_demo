@@ -12,12 +12,12 @@ router.post('/addSurveyItem', surveyListControl.createWithUploadPic);
 
 router.post('/delSurveyItem', surveyListControl.remove);
 
-
 router.post('/register', UsersListControl.register);
 
 router.post('/login', UsersListControl.login);
 
 router.post('/addAnswerItem', AnswersListControl.create);
 
+router.get('/getAnswerSum', AnswersListControl.sumById);
 
 module.exports = router;

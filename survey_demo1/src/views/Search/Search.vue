@@ -112,7 +112,7 @@ export default {
         localStorage.setItem(`searchHistoryList`, history);
         ctx.store.commit('changeSearchValue', inputText.value);
         ctx.router.push({
-          path: '/',
+          path: '/'
           // 返回到url到Home页
           // 或可以存入vuex
           // query: {

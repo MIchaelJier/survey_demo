@@ -110,7 +110,7 @@ export default {
             state.list.push(...addList);
           }
           if (addList.length < size) {
-            console.log('已经加载全部')
+            console.log('已经加载全部');
             state.finished = true;
           }
           page++;
@@ -140,7 +140,7 @@ export default {
     }
     // 退出登录
     function signOut() {
-       Dialog.confirm({
+      Dialog.confirm({
         title: '提示',
         message: '确定退出登录?',
         showCancelButton: true
@@ -148,8 +148,8 @@ export default {
         .then(action => {
           if (action === 'confirm') {
             // 确认的回调
-           ctx.store.commit('clearUserInfo');
-           localStorage.removeItem('survey_userInfo');
+            ctx.store.commit('clearUserInfo');
+            localStorage.removeItem('survey_userInfo');
           }
         })
         .catch(err => {
@@ -183,5 +183,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import './Home.scss';
+@import './Home.scss';
 </style>
