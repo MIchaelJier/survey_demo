@@ -65,17 +65,49 @@ const AnswersListControl = {
                     }
                 });
             });
+            const answer = [];
+
             question.questions.list.forEach((item, index) => {
-                // 选择题 统计
-                if (item.type < 3) {
-                    const names = item.content;
-                    const values = all[index].map(inner => names[inner]);
+                // 选择题 打分题 统计
+                if (item.type < 3 || item.type === 4) {
+                    const names = item.type === 4 ? ['0星', '1星', '2星', '3星', '4星', '5星'] : item.content;
+                    const values = all[index];
+                    const ans = names.map(name => ({name, value: 0}));
 
-                    console.log(values);
+                    values.forEach(inner => {
+                        ans[inner].value ++; 
+                    });
+                    answer.push(ans);
+                } else if (item.type === 5) {
+                    const timer = [];
+                    const values = all[index];
+
+                   for (let i = 0 ; i < 24 ; i ++) {
+                       timer.push(0);
+                   }
+                   values.forEach(inner => {
+                     timer[parseInt(inner.split(':')[0])] ++;
+                   });
+                   answer.push(timer);
+                } else {
+                    let ans = [{name: '未重复项', value: 0}];
+                    const ansMap = all[index].reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map());
+
+                    for (let [key, value] of ansMap.entries()) {
+                        if (value > 1) {
+                            ans.push({name: key, value});
+                        } else {
+                            ans[0].value ++;
+                        }
+                    }
+                    // 取最多数量的前5个
+                    answer.push(ans.sort((a, b) => (a.value - b.value)).slice(0, 5));
                 }
+                    
+return item;
+                
             });
-
-            resBack.sussess(res, {all, question});
+            resBack.sussess(res, {question, answer} );
         } catch (err) {
             resBack.fail(res, err);
             // next(err)
