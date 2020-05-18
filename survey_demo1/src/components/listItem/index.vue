@@ -19,12 +19,16 @@ export default {
     itemData: {
       type: [Object, Array],
       default: () => {}
+    },
+    goPage: {
+      type: String,
+      default: '/about'
     }
   },
   setup(props, ctx) {
     function jump() {
       console.log(ctx);
-      ctx.router.push(`/about?id=${props.itemData.id}`);
+      ctx.router.push(`${props.goPage}?id=${props.itemData.id}`);
     }
     return {
       jump

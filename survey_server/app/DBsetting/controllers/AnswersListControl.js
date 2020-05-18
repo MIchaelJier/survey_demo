@@ -41,6 +41,11 @@ const AnswersListControl = {
             const question = await SurveyList.findOne({ _id: idParams });
             let all = []; // 各题答案 数组
 
+            if (answers.length === 0) {
+                resBack.sussess(res, {question, answer: []} );
+                
+return;
+            }
             answers.forEach(item => {
                 item.answerList.forEach((inner, index) => {
                     // 1 1 

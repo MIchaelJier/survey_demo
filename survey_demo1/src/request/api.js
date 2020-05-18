@@ -12,4 +12,4 @@ export const submit_answer = p => post('/addAnswerItem', p);
 
 export const submit_survey = (p, config) => post('/addSurveyItem', p, config);
 
-export const get_answer_sum = p => post('/getAnswerSum', p);
+export const get_answer_sum = p => get('/getAnswerSum', p);

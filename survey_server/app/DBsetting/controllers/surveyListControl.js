@@ -15,7 +15,10 @@ const surveyListControl = {
 
         SurveyList
             .find({
-                'questions.title': { $regex: search},
+                $or: [ //多条件，数组
+                    {'questions.title': {$regex: search}},
+                    {'createId': search},
+                ],
             })
             .limit(size)
             .skip(page)

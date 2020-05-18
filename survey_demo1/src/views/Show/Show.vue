@@ -8,16 +8,28 @@
       placeholder
       fixed
     />
-    <div class="question-title">
-      你的课余时间会安排在
-    </div>
-    <Echarts-pie :echartsData="echartsData"></Echarts-pie>
-    <Echarts-line :echartsData="echartsData2"></Echarts-line>
+    <!-- 问卷区 -->
+     <div class="form-top" v-if="Object.keys(questionAllInfo).length !== 0">
+        <p class="form-top-title">{{ questionAllInfo.questions.title }}</p>
+        <p class="form-top-intro">
+          {{ questionAllInfo.questions.description }}
+        </p>
+     </div>
+    <!-- 答卷区 -->
+    <div v-if="echartsData.length === 0" class="question-none">暂无充足问卷</div>
+    <van-collapse v-model="activeName" accordion>
+      <div v-for="(item, index) in echartsData" :key="index">
+        <van-collapse-item :title="questionData[index].question" :name="index + 1">
+          <Echarts-pie :echartsData="item"  v-if="isObject(item[0])"></Echarts-pie>
+          <Echarts-line :echartsData="item" v-else></Echarts-line>
+        </van-collapse-item>
+      </div>
+    </van-collapse>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue-function-api';
+import { ref, onMounted, computed } from 'vue-function-api';
 import EchartsPie from '@/components/EchartsModel/pie'
 import EchartsLine from '@/components/EchartsModel/line'
 export default {
@@ -26,46 +38,34 @@ export default {
     EchartsLine
   },
   setup(props, ctx) {
-    // ctx.api.get_answer_sum()
-    const echartsData = [
-        { value: 335, name: '运动时间大于一些' },
-        { value: 310, name: '学习时间大于一些' },
-        { value: 234, name: '看报时间大于一些' },
-        { value: 135, name: '选项4' },
-    ]
-    const echartsData2 = [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                1,
-                0,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ]
+     // state
+    const id = ref('');
+    const activeName = ref('1');
+    const echartsData = ref([]);
+    const questionData = ref([]);
+    const questionAllInfo = ref({});
+    // computer
+    const isObject = computed(() => obj => Reflect.toString.call(obj) === '[object Object]')
+    // mouted
+    onMounted(() => {
+      id.value = ctx.route.query.id;
+      ctx.api.get_answer_sum({ id: id.value }).then(res => {
+        console.log(res);
+        echartsData.value = res.data.answer;
+        questionData.value = res.data.question.questions.list;
+        questionAllInfo.value = res.data.question;
+      });
+    });
     // 返回
     function onClickLeft() {
       ctx.router.push('/');
     }
     return {
+      isObject,
+      activeName,
       echartsData,
-      echartsData2,
+      questionData,
+      questionAllInfo,
       onClickLeft
     };
   }

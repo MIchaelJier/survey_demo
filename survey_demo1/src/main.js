@@ -55,6 +55,8 @@ import {
   TabbarItem,
   Uploader,
   Switch,
+  Collapse,
+  CollapseItem,
   Image as VanImage
 } from 'vant';
 Vue.use(List);
@@ -81,6 +83,8 @@ Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(Uploader);
 Vue.use(Switch);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 Vue.config.productionTip = false;
 
 new Vue({

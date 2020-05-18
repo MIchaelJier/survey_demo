@@ -6,3 +6,25 @@
     line-height: 40px;
     height: 40px;
 }
+.question-none {
+    font-size: 14px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-normal;
+}
+.form-top {
+    &-title {
+        font-size: .4rem;
+        text-align: center;
+        line-height: .8rem;
+    }
+    &-intro {
+        font-size: .28rem;
+        margin: .3rem .32rem;
+        color: $color-normal;
+        letter-spacing: 1px;
+        line-height: .45rem;
+    }
+}
