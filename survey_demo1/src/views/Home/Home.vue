@@ -72,15 +72,24 @@
 </template>
 
 <script>
-import { reactive, ref, onMounted, computed, watch } from 'vue-function-api';
-import listItem from '@/components/listItem/index';
+import {
+  reactive,
+  ref,
+  onMounted,
+  computed,
+  watch,
+  inject
+} from 'vue-function-api';
 import { Dialog } from 'vant';
 import TaskSlice from '@/common/taskSlice';
+const listItem = () => import('@/components/listItem/index');
 export default {
   components: {
     listItem
   },
+  // inject: ['reload'],
   setup(props, ctx) {
+    console.log(ctx, props);
     const search = ref('');
     const state = reactive({
       list: [],
@@ -92,6 +101,8 @@ export default {
       userInfo: {},
       popupShow: false
     });
+    // inject
+    const reload = inject('reload');
     // 分页请求设置
     const size = 10;
     let page = 1;
@@ -112,7 +123,7 @@ export default {
         state.isLoading = false;
         state.finished = false;
       }
-      if (state.isLoading) {
+      if (state.isLoading || state.finished) {
         state.loading = false;
         return;
       }
@@ -123,7 +134,6 @@ export default {
           search: search.value
         })
         .then(res => {
-          console.log(res);
           const addList = res.data;
           // 如果是第一次请求
           if (first) {
@@ -147,7 +157,7 @@ export default {
     }
     function onLoad() {
       setTimeout(() => {
-        state.isShowMySurvey = false;
+        // state.isShowMySurvey = false;
         dataReq();
       }, 1000);
     }
@@ -170,6 +180,10 @@ export default {
       if (!state.isLogin) return;
       ctx.store.commit('changeSearchValue', state.userInfo._id);
       state.isShowMySurvey = true;
+      state.popupShow = false;
+      reload(true, () => {
+        ctx.router.push('/');
+      });
     }
     // 退出登录
     function signOut() {

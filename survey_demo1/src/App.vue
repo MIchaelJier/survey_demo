@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-      <router-view class="Router xBottom" v-show="RouterState"></router-view>
+      <router-view class="Router xBottom"
+                   v-show="RouterState"></router-view>
     </transition>
   </div>
 </template>
@@ -35,17 +36,18 @@ export default {
       }
       next();
     });
-
-    function reload(flag) {
+    // 本页跳转
+    function reload(flag, func) {
       // flag=false 返回
       flag
         ? (transitionName.value = 'slide-left')
         : (transitionName.value = 'slide-right');
       RouterState.value = false;
       setTimeout(() => {
-        ctx.nextTick(() => {
-          RouterState.value = true;
-        });
+        // ctx.nextTick(() => {
+        RouterState.value = true;
+        func;
+        // });
       }, 700);
     }
     return {
@@ -80,6 +82,22 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+
+// img[lazy='loading'] {
+//   opacity: 0;
+//   transition: opacity 1s;
+// }
+img[lazy='loaded'] {
+  animation: fade 0.5s;
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

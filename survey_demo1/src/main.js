@@ -57,6 +57,7 @@ import {
   Switch,
   Collapse,
   CollapseItem,
+  Lazyload,
   Image as VanImage
 } from 'vant';
 Vue.use(List);
@@ -85,6 +86,7 @@ Vue.use(Uploader);
 Vue.use(Switch);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
+Vue.use(Lazyload);
 Vue.config.productionTip = false;
 
 new Vue({

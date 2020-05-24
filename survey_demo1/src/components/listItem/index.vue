@@ -1,6 +1,9 @@
 <template>
-  <div class="listItem" @click="jump">
-    <img :src="itemData.coverPic" alt="" class="listItem-image" />
+  <div class="listItem"
+       @click="jump">
+    <img v-lazy="itemData.coverPic"
+         alt=""
+         class="listItem-image" />
     <div class="right">
       <p class="right-title">{{ itemData.title }}</p>
       <div>

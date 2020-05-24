@@ -1,14 +1,14 @@
 <template>
   <div class="whiteBG">
-    <van-nav-bar
-      :title="questions.title"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-      placeholder
-      fixed
-    />
-    <img :src="questions.coverPic" alt="" class="headerPic" />
+    <van-nav-bar :title="questions.title"
+                 left-text="返回"
+                 left-arrow
+                 @click-left="onClickLeft"
+                 placeholder
+                 fixed />
+    <img v-lazy="questions.coverPic"
+         alt=""
+         class="headerPic" />
     <van-form>
       <div class="form-top">
         <p class="form-top-title">{{ questions.title }}</p>
@@ -16,12 +16,17 @@
           {{ questions.description }}
         </p>
       </div>
-      <div v-for="item in questions.list" :key="item._id">
-        <question-box :boxValue="item" @addMap="addMap"></question-box>
+      <div v-for="item in questions.list"
+           :key="item._id">
+        <question-box :boxValue="item"
+                      @addMap="addMap"></question-box>
       </div>
     </van-form>
     <div style="padding: 16px;">
-      <van-button round block type="info" @click="onSubmit">
+      <van-button round
+                  block
+                  type="info"
+                  @click="onSubmit">
         提交
       </van-button>
     </div>
@@ -29,10 +34,10 @@
 </template>
 
 <script>
-import questionBox from '@/components/questionBox';
 import './About.scss';
 import { Notify } from 'vant';
 import { onMounted, ref, reactive } from 'vue-function-api';
+const questionBox = () => import('@/components/questionBox');
 export default {
   components: {
     questionBox
