@@ -1,140 +1,123 @@
 <template>
   <div>
-    <van-nav-bar
-      title="新建问卷"
-      left-text="返回"
-      left-arrow
-      @click-left="onClickLeft"
-      placeholder
-      fixed
-    />
+    <van-nav-bar title="新建问卷"
+                 left-text="返回"
+                 left-arrow
+                 @click-left="onClickLeft"
+                 placeholder
+                 fixed />
     <div>
       <!-- <van-form @submit="onSubmit">   -->
-      <van-field name="uploader" label="封面">
+      <van-field name="uploader"
+                 label="封面">
         <template #input>
-          <van-uploader v-model="uploader" multiple :max-count="1" />
+          <van-uploader v-model="uploader"
+                        multiple
+                        :max-count="1" />
         </template>
       </van-field>
-      <van-field
-        v-model="name"
-        name="name"
-        label="问卷名"
-        placeholder="问卷名"
-        :required="false"
-      />
-      <van-field
-        v-model="description"
-        name="description"
-        label="问卷描述"
-        placeholder="问卷描述"
-        rows="1"
-        autosize
-        type="textarea"
-        :required="false"
-      />
-      <div v-for="(item, index) in questionList" :key="index">
-        <van-field
-          :label="'问题' + (index + 1)"
-          :placeholder="item.question === '' ? '点击编辑问题' : item.question"
-          @click="editQuestion(index)"
-          :required="false"
-          readonly
-        >
+      <van-field v-model="name"
+                 name="name"
+                 label="问卷名"
+                 placeholder="问卷名"
+                 :required="false" />
+      <van-field v-model="description"
+                 name="description"
+                 label="问卷描述"
+                 placeholder="问卷描述"
+                 rows="1"
+                 autosize
+                 type="textarea"
+                 :required="false" />
+      <div v-for="(item, index) in questionList"
+           :key="index">
+        <van-field :label="'问题' + (index + 1)"
+                   :placeholder="item.question === '' ? '点击编辑问题' : item.question"
+                   @click="editQuestion(index)"
+                   :required="false"
+                   readonly>
           <template #button>
-            <van-icon
-              name="clear"
-              color="#dd524d"
-              size="20px"
-              @click="delQuestion(index)"
-            ></van-icon>
+            <van-icon name="clear"
+                      color="#dd524d"
+                      size="20px"
+                      @click="delQuestion(index)"></van-icon>
           </template>
         </van-field>
       </div>
       <div class="add_button">
-        <van-button
-          round
-          color="linear-gradient(to right, #4bb0ff, #6149f6)"
-          @click="addQuestion"
-          native-type="button"
-        >
+        <van-button round
+                    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+                    @click="addQuestion"
+                    native-type="button">
           新增问题
         </van-button>
       </div>
       <div class="submit_button xBottom">
-        <van-button
-          block
-          color="linear-gradient(to right, #4bb0ff, #6149f6)"
-          @click="onSubmit"
-        >
+        <van-button block
+                    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+                    @click="onSubmit">
           提交
         </van-button>
       </div>
     </div>
     <!-- 编辑问题 -->
-    <van-popup
-      v-model="popupShow"
-      closeable
-      position="bottom"
-      :style="{ height: '80%' }"
-    >
-      <van-field
-        label="问题"
-        placeholder="为什么..."
-        :value="nowProperty('question')"
-        @input="changeQuestion($event, 'question')"
-      />
-      <van-field label="问题类型">
-        <template #input>
-          <van-radio-group :value="nowProperty('type')">
-            <div v-for="(item, index) in questionType" :key="index">
-              <van-radio :name="index + 1" @click="changeType(index)">{{
+    <van-popup v-model="popupShow"
+               closeable
+               position="bottom"
+               :style="{ height: '80%' }">
+      <div style="margin-top: 38px">
+        <van-field label="问题"
+                   placeholder="为什么..."
+                   :value="nowProperty('question')"
+                   @input="changeQuestion($event, 'question')" />
+        <van-field label="问题类型">
+          <template #input>
+            <van-radio-group :value="nowProperty('type')">
+              <div v-for="(item, index) in questionType"
+                   :key="index">
+                <van-radio :name="index + 1"
+                           @click="changeType(index)">{{
                 item.name
               }}</van-radio>
-            </div>
-          </van-radio-group>
-        </template>
-      </van-field>
-      <van-field label="是否必填">
-        <template #input>
-          <van-switch
-            size="20"
-            :value="nowProperty('isNecessity')"
-            @change="changeQuestion($event, 'isNecessity')"
-          />
-        </template>
-      </van-field>
-      <div v-if="nowQuestion >= 0">
-        <div v-for="(item, index) in nowProperty('content')" :key="index">
-          <van-field
-            :label="'选项' + (index + 1)"
-            placeholder="选项内容"
-            :value="item"
-            @input="changeQuestionContent($event, index)"
-          >
-            <template #button>
-              <van-icon
-                name="clear"
-                color="#dd524d"
-                size="20px"
-                @click="delChoose(index)"
-              ></van-icon> </template
-            >n
-          </van-field>
+              </div>
+            </van-radio-group>
+          </template>
+        </van-field>
+        <van-field label="是否必填">
+          <template #input>
+            <van-switch size="20"
+                        :value="nowProperty('isNecessity')"
+                        @change="changeQuestion($event, 'isNecessity')" />
+          </template>
+        </van-field>
+        <div v-if="nowQuestion >= 0">
+          <div v-for="(item, index) in nowProperty('content')"
+               :key="index">
+            <van-field :label="'选项' + (index + 1)"
+                       placeholder="选项内容"
+                       :value="item"
+                       @input="changeQuestionContent($event, index)">
+              <template #button>
+                <van-icon name="clear"
+                          color="#dd524d"
+                          size="20px"
+                          @click="delChoose(index)"></van-icon>
+              </template>n
+            </van-field>
+          </div>
         </div>
-      </div>
-      <div class="add_button">
-        <van-button
-          round
-          color="linear-gradient(to right, #4bb0ff, #6149f6)"
-          @click="addChoose"
-          v-show="
+        <div class="add_button">
+          <van-button round
+                      color="linear-gradient(to right, #4bb0ff, #6149f6)"
+                      @click="addChoose"
+                      v-show="
             questionList[nowQuestion]
               ? parseInt(questionList[nowQuestion].type) <= 2
               : ''
-          "
-        >
-          新增选项
-        </van-button>
+          ">
+            新增选项
+          </van-button>
+        </div>
       </div>
     </van-popup>
   </div>
